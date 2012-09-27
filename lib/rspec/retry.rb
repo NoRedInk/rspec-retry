@@ -11,8 +11,9 @@ module RSpec
           retry_count.times do |i|
             if RSpec.configuration.verbose_retry?
               if i > 0
-                puts if i == 1
-                puts "RSpec::Retry: #{RSpec::Retry.ordinalize(i + 1)} try #{@example.location}"
+                message = "RSpec::Retry: #{RSpec::Retry.ordinalize(i + 1)} try #{@example.location}"
+                message = "\n" + message if i == 1
+                RSpec.configuration.reporter.message(message)
               end
             end
             @example.clear_exception
