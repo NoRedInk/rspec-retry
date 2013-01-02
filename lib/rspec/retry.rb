@@ -6,8 +6,10 @@ module RSpec
     def self.apply
       RSpec.configure do |config|
         config.add_setting :verbose_retry, :default => false
+        config.add_setting :default_retry_count, :default => 1
         config.around(:each) do |example|
-          retry_count = example.metadata[:retry] || 1
+          retry_count = example.metadata[:retry] || RSpec.configuration.default_retry_count
+          puts "retry count for this puppy is #{retry_count}"
           retry_count.times do |i|
             if RSpec.configuration.verbose_retry?
               if i > 0
