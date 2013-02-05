@@ -7,3 +7,14 @@ module RSpec
     end
   end
 end
+
+module RSpec
+  module Core
+    class ExampleGroup
+      def clear_lets
+        @__memoized = {}
+      end
+    end
+  end
+end
+
