@@ -41,6 +41,12 @@ end
 # RSpec::Retry: 3rd try ./spec/lib/random_spec.rb:49
 ```
 
+## Configuration
+
+- __:verbose_retry__(default: *false*) Print retry status
+- __:default_retry_count__(default: *1*) If retry count is not set in example, this value is used by default
+- __:clear_lets_on_failure__(default: *true*) Clear memoized value for ``let`` before retrying
+
 ## Contributing
 
 1. Fork it
