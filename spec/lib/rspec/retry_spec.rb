@@ -49,5 +49,26 @@ describe RSpec::Retry do
     it 'should success randomly', :retry => 3 do
       rand(3).should == 1
     end
+    
+  end
+  
+  describe 'clearing lets' do
+    before(:all) do
+      @control = true
+    end
+
+    let(:let_based_on_control) { @control }
+
+    after do
+      @control = false
+    end
+
+    it 'should clear the let when the test fails so it can be reset', :retry => 2 do
+      let_based_on_control.should == false
+    end
+      
+    it 'should not clear the let when the test fails', :retry => 2, :clear_lets_on_failure => false do
+      let_based_on_control.should == !@control
+    end  
   end
 end
