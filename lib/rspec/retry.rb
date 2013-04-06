@@ -1,3 +1,4 @@
+require 'rspec/core'
 require 'rspec/retry/version'
 require 'rspec_ext/rspec_ext'
 
