@@ -9,6 +9,7 @@ module RSpec
         config.add_setting :verbose_retry, :default => false
         config.add_setting :default_retry_count, :default => 1
         config.add_setting :clear_lets_on_failure, :default => true
+        callbacks = RSpec.configuration.formatters.map{|f| f if f.respond_to? :retry}.compact! || []
 
         config.around(:each) do |example|
           retry_count = example.metadata[:retry] || RSpec.configuration.default_retry_count
@@ -21,6 +22,10 @@ module RSpec
               if i > 0
                 message = "RSpec::Retry: #{RSpec::Retry.ordinalize(i + 1)} try #{@example.location}"
                 message = "\n" + message if i == 1
+                RSpec.configuration.formatters.map{|f| f.respond_to? :retry}.each do |f| puts f.inspect end
+                callbacks.each do |callback|
+                  callback.retry(@example)
+                end
                 RSpec.configuration.reporter.message(message)
               end
             end
