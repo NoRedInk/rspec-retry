@@ -41,6 +41,23 @@ end
 # RSpec::Retry: 3rd try ./spec/lib/random_spec.rb:49
 ```
 
+##Add retry as default to all specs
+Create file with this content and require it ``scep_helper.rb``
+```ruby
+module RSpec
+  module Core
+    module DSL
+      def describe(*args, &example_group_block)
+        numbers_of_retry = 3
+        args[1] = Hash.new if args.length == 1
+        args[1][:retry] = numbers_of_retry unless args[1].has_key?(:retry)
+        RSpec::Core::ExampleGroup.describe(*args, &example_group_block).register
+      end
+    end
+  end
+end
+```
+
 ## Configuration
 
 - __:verbose_retry__(default: *false*) Print retry status
