@@ -42,8 +42,9 @@ end
 ```
 
 ##Add retry as default to all specs
-Create file with this content and require it ``scep_helper.rb``
+Add this to ``scep_helper.rb``
 ```ruby
+require 'rspec/retry'
 module RSpec
   module Core
     module DSL
