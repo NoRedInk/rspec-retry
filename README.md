@@ -42,7 +42,7 @@ end
 ```
 
 ##Add retry as default to all specs
-Add this to ``scep_helper.rb``
+Add this to ``spec_helper.rb``
 ```ruby
 require 'rspec/retry'
 module RSpec
