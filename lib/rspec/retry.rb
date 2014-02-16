@@ -10,7 +10,13 @@ module RSpec
         config.add_setting :default_retry_count, :default => 1
         config.add_setting :clear_lets_on_failure, :default => true
 
+        # context.example is deprecated, but RSpec.current_example is not
+        # available until RSpec 3.0.
+        fetch_current_example = RSpec.respond_to?(:current_example) ?
+          proc { RSpec.current_example } : proc { |context| context.example }
+
         config.around(:each) do |ex|
+          example = fetch_current_example.call(self)
           retry_count = ex.metadata[:retry] || RSpec.configuration.default_retry_count
 
           clear_lets = ex.metadata[:clear_lets_on_failure]
@@ -19,15 +25,15 @@ module RSpec
           retry_count.times do |i|
             if RSpec.configuration.verbose_retry?
               if i > 0
-                message = "RSpec::Retry: #{RSpec::Retry.ordinalize(i + 1)} try #{RSpec.current_example.location}"
+                message = "RSpec::Retry: #{RSpec::Retry.ordinalize(i + 1)} try #{example.location}"
                 message = "\n" + message if i == 1
                 RSpec.configuration.reporter.message(message)
               end
             end
-            RSpec.current_example.clear_exception
+            example.clear_exception
             ex.run
 
-            break if RSpec.current_example.exception.nil?
+            break if example.exception.nil?
 
             self.clear_lets if clear_lets
           end
