@@ -45,6 +45,7 @@ end
 
 - __:verbose_retry__(default: *false*) Print retry status
 - __:default_retry_count__(default: *1*) If retry count is not set in example, this value is used by default
+- __:retry_wait__(default: *0*) Seconds to wait between retries
 - __:clear_lets_on_failure__(default: *true*) Clear memoized value for ``let`` before retrying
 
 ## Contributing
