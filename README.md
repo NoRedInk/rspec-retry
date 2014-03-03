@@ -36,6 +36,9 @@ it 'should randomly success', :retry => 3 do
   rand(2).should == 1
 end
 
+it 'should succeed after a while', :retry => 3, :retry_wait=>10 do
+  command('service myservice status').should == 'started'
+end
 # run spec (following log is shown if verbose_retry options is true)
 # RSpec::Retry: 2nd try ./spec/lib/random_spec.rb:49
 # RSpec::Retry: 3rd try ./spec/lib/random_spec.rb:49
