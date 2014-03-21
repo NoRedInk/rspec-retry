@@ -6,6 +6,7 @@ module RSpec
   class Retry
     def self.apply
       RSpec.configure do |config|
+        config.add_setting :retry_on_tags, :default => nil
         config.add_setting :verbose_retry, :default => false
         config.add_setting :default_retry_count, :default => 1
         config.add_setting :clear_lets_on_failure, :default => true
@@ -16,6 +17,10 @@ module RSpec
           proc { RSpec.current_example } : proc { |context| context.example }
 
         config.around(:each) do |ex|
+          if retry_on_tags = RSpec.configuration.retry_on_tags
+            return unless ex.metadata.keys.any? &retry_on_tags.method(:include?)
+          end
+
           example = fetch_current_example.call(self)
           retry_count = ex.metadata[:retry] || RSpec.configuration.default_retry_count
 
