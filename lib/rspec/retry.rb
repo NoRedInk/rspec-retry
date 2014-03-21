@@ -32,7 +32,7 @@ module RSpec
             break if @example.exception.nil?
 
             self.clear_lets if clear_lets
-            sleep sleep_interval if sleep_interval
+            sleep sleep_interval if sleep_interval.to_i > 0
           end
         end
       end
