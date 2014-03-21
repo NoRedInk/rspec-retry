@@ -18,11 +18,16 @@ module RSpec
 
         config.around(:each) do |ex|
           if retry_on_tags = RSpec.configuration.retry_on_tags
-            return unless ex.metadata.keys.any? &retry_on_tags.method(:include?)
+            retry_count = 1 unless ex.metadata.keys.any? &retry_on_tags.method(:include?)
           end
 
           example = fetch_current_example.call(self)
-          retry_count = ex.metadata[:retry] || RSpec.configuration.default_retry_count
+
+          if times = ex.metadata[:retry]
+            retry_count = times
+          end
+
+          retry_count ||= RSpec.configuration.default_retry_count
 
           clear_lets = ex.metadata[:clear_lets_on_failure]
           clear_lets = RSpec.configuration.clear_lets_on_failure if clear_lets.nil?
