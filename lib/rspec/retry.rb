@@ -8,6 +8,7 @@ module RSpec
       RSpec.configure do |config|
         config.add_setting :verbose_retry, :default => false
         config.add_setting :default_retry_count, :default => 1
+        config.add_setting :default_sleep_interval, :default => 0
         config.add_setting :clear_lets_on_failure, :default => true
 
         # context.example is deprecated, but RSpec.current_example is not
@@ -18,6 +19,7 @@ module RSpec
         config.around(:each) do |ex|
           example = fetch_current_example.call(self)
           retry_count = ex.metadata[:retry] || RSpec.configuration.default_retry_count
+          sleep_interval = ex.metadata[:retry_wait] || RSpec.configuration.default_sleep_interval
 
           clear_lets = ex.metadata[:clear_lets_on_failure]
           clear_lets = RSpec.configuration.clear_lets_on_failure if clear_lets.nil?
@@ -36,6 +38,7 @@ module RSpec
             break if example.exception.nil?
 
             self.clear_lets if clear_lets
+            sleep sleep_interval if sleep_interval.to_i > 0
           end
         end
       end
