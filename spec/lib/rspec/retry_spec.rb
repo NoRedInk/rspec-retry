@@ -21,7 +21,7 @@ describe RSpec::Retry do
 
   context 'no retry option' do
     it 'should work' do
-      true.should be_true
+      true.should be true
     end
   end
 
