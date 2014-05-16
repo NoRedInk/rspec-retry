@@ -41,6 +41,7 @@ module RSpec
               end
             end
             example.clear_exception
+            ex.metadata[:retry_times] = i
             ex.run
 
             break if example.exception.nil?
