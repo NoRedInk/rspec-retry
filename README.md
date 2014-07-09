@@ -1,8 +1,8 @@
 # RSpec::Retry
 
-RSpec::Retry adds ``:retry`` option to rspec example.
-It is for randomly failing example.
-If example has ``:retry``, rspec retry specified times until success.
+RSpec::Retry adds a ``:retry`` option for intermittently failing rspec examples.
+If an example has the ``:retry`` option, rspec will retry the example the
+specified number of times until the example succeeds.
 
 ## Installation
 
@@ -32,11 +32,11 @@ end
 ## Usage
 
 ```ruby
-it 'should randomly success', :retry => 3 do
+it 'should randomly succeed', :retry => 3 do
   rand(2).should == 1
 end
 
-it 'should succeed after a while', :retry => 3, :retry_wait=>10 do
+it 'should succeed after a while', :retry => 3, :retry_wait => 10 do
   command('service myservice status').should == 'started'
 end
 # run spec (following log is shown if verbose_retry options is true)
@@ -47,9 +47,9 @@ end
 ## Configuration
 
 - __:verbose_retry__(default: *false*) Print retry status
-- __:default_retry_count__(default: *1*) If retry count is not set in example, this value is used by default
+- __:default_retry_count__(default: *1*) If retry count is not set in an example, this value is used by default
 - __:retry_wait__(default: *0*) Seconds to wait between retries
-- __:clear_lets_on_failure__(default: *true*) Clear memoized value for ``let`` before retrying
+- __:clear_lets_on_failure__(default: *true*) Clear memoized values for ``let``s before retrying
 
 ## Contributing
 
@@ -57,4 +57,4 @@ end
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+5. Create a pull request
