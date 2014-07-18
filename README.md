@@ -1,8 +1,8 @@
 # RSpec::Retry
 
-RSpec::Retry adds ``:retry`` option to rspec example.
+RSpec::Retry adds ``:try`` option to rspec example.
 It is for randomly failing example.
-If example has ``:retry``, rspec retry specified times until success.
+If example has ``:try``, rspec retry specified times until success.
 
 ## Installation
 
@@ -32,11 +32,11 @@ end
 ## Usage
 
 ```ruby
-it 'should randomly success', :retry => 3 do
+it 'should randomly success', :try => 3 do
   rand(2).should == 1
 end
 
-it 'should succeed after a while', :retry => 3, :retry_wait=>10 do
+it 'should succeed after a while', :try => 3, :retry_wait=>10 do
   command('service myservice status').should == 'started'
 end
 # run spec (following log is shown if verbose_retry options is true)
@@ -47,7 +47,7 @@ end
 ## Configuration
 
 - __:verbose_retry__(default: *false*) Print retry status
-- __:default_retry_count__(default: *1*) If retry count is not set in example, this value is used by default
+- __:default_try_count__(default: *1*) If try count is not set in example, this value is used by default
 - __:retry_wait__(default: *0*) Seconds to wait between retries
 - __:clear_lets_on_failure__(default: *true*) Clear memoized value for ``let`` before retrying
 
