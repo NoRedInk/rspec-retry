@@ -31,7 +31,7 @@ describe RSpec::Retry do
     context do
       before(:all) { set_expectations([false, false, true]) }
 
-      it 'should run example until :retry times', :retry => 3 do
+      it 'should run example until :retry times', :try => 3 do
         true.should == shift_expectation
         count.should == 3
       end
@@ -40,7 +40,7 @@ describe RSpec::Retry do
     context do
       before(:all) { set_expectations([false, true, false]) }
 
-      it 'should stop retrying if  example is succeeded', :retry => 3 do
+      it 'should stop retrying if  example is succeeded', :try => 3 do
         true.should == shift_expectation
         count.should == 2
       end
@@ -58,11 +58,11 @@ describe RSpec::Retry do
       @control = false
     end
 
-    it 'should clear the let when the test fails so it can be reset', :retry => 2 do
+    it 'should clear the let when the test fails so it can be reset', :try => 2 do
       let_based_on_control.should == false
     end
 
-    it 'should not clear the let when the test fails', :retry => 2, :clear_lets_on_failure => false do
+    it 'should not clear the let when the test fails', :try => 2, :clear_lets_on_failure => false do
       let_based_on_control.should == !@control
     end
   end

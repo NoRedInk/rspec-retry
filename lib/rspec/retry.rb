@@ -7,7 +7,7 @@ module RSpec
     def self.apply
       RSpec.configure do |config|
         config.add_setting :verbose_retry, :default => false
-        config.add_setting :default_retry_count, :default => 1
+        config.add_setting :default_try_count, :default => 1
         config.add_setting :default_sleep_interval, :default => 0
         config.add_setting :clear_lets_on_failure, :default => true
 
@@ -18,13 +18,13 @@ module RSpec
 
         config.around(:each) do |ex|
           example = fetch_current_example.call(self)
-          retry_count = ex.metadata[:retry] || RSpec.configuration.default_retry_count
+          try_count = ex.metadata[:try] || RSpec.configuration.default_try_count
           sleep_interval = ex.metadata[:retry_wait] || RSpec.configuration.default_sleep_interval
 
           clear_lets = ex.metadata[:clear_lets_on_failure]
           clear_lets = RSpec.configuration.clear_lets_on_failure if clear_lets.nil?
 
-          retry_count.times do |i|
+          try_count.times do |i|
             if RSpec.configuration.verbose_retry?
               if i > 0
                 message = "RSpec::Retry: #{RSpec::Retry.ordinalize(i + 1)} try #{example.location}"
