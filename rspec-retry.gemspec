@@ -16,5 +16,9 @@ Gem::Specification.new do |gem|
   gem.version       = RSpec::Retry::VERSION
   gem.add_runtime_dependency %{rspec}
   gem.add_development_dependency %q{guard-rspec}
-  gem.add_development_dependency %q{pry-debugger}
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2')
+    gem.add_development_dependency %q{pry-debugger}
+  else
+    gem.add_development_dependency %q{pry-byebug}
+  end
 end
