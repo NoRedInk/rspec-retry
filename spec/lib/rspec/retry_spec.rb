@@ -45,6 +45,22 @@ describe RSpec::Retry do
         expect(count).to eq(2)
       end
     end
+
+    describe "with a list of exceptions", :retry => 2, :exceptions_to_retry => [NoMethodError] do
+      context "the example throws an exception contained in the retry list" do
+        it "retries the maximum number of times" do
+          raise NoMethodError unless count > 1
+          expect(count).to eq(2)
+        end
+      end
+
+      context "the example fails (with an exception not in the retry list)" do
+        it "only runs once" do
+          set_expectations([false])
+          expect(count).to eq(1)
+        end
+      end
+    end
   end
 
   describe 'clearing lets' do
