@@ -10,6 +10,7 @@ module RSpec
         config.add_setting :default_retry_count, :default => 1
         config.add_setting :default_sleep_interval, :default => 0
         config.add_setting :clear_lets_on_failure, :default => true
+        callbacks = RSpec.configuration.formatters.map{|f| f if f.respond_to? :retry}.compact! || []
 
         # context.example is deprecated, but RSpec.current_example is not
         # available until RSpec 3.0.
@@ -29,6 +30,10 @@ module RSpec
               if i > 0
                 message = "RSpec::Retry: #{RSpec::Retry.ordinalize(i + 1)} try #{example.location}"
                 message = "\n" + message if i == 1
+                RSpec.configuration.formatters.map{|f| f.respond_to? :retry}.each do |f| puts f.inspect end
+                callbacks.each do |callback|
+                  callback.retry(@example)
+                end
                 RSpec.configuration.reporter.message(message)
               end
             end
