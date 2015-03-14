@@ -33,11 +33,11 @@ end
 
 ```ruby
 it 'should randomly success', :retry => 3 do
-  rand(2).should == 1
+  expect(rand(2)).to eq(1)
 end
 
 it 'should succeed after a while', :retry => 3, :retry_wait=>10 do
-  command('service myservice status').should == 'started'
+  expect(command('service myservice status')).to eq('started')
 end
 # run spec (following log is shown if verbose_retry options is true)
 # RSpec::Retry: 2nd try ./spec/lib/random_spec.rb:49
@@ -50,6 +50,7 @@ end
 - __:default_retry_count__(default: *1*) If retry count is not set in example, this value is used by default
 - __:default_sleep_interval__(default: *0*) Seconds to wait between retries
 - __:clear_lets_on_failure__(default: *true*) Clear memoized value for ``let`` before retrying
+- __:exceptions_to_retry__(default: *[]*) List of exceptions that will trigger a retry (when empty, all exceptions will)
 
 ## Contributing
 

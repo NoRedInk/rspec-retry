@@ -10,6 +10,12 @@ module RSpec
         config.add_setting :default_retry_count, :default => 1
         config.add_setting :default_sleep_interval, :default => 0
         config.add_setting :clear_lets_on_failure, :default => true
+        # If a list of exceptions is provided and 'retry' > 1, we only retry if
+        # the exception that was raised by the example is in that list. Otherwise
+        # we ignore the 'retry' value and fail immediately.
+        #
+        # If no list of exceptions is provided and 'retry' > 1, we always retry.
+        config.add_setting :exceptions_to_retry, :default => []
 
         # context.example is deprecated, but RSpec.current_example is not
         # available until RSpec 3.0.
@@ -20,6 +26,7 @@ module RSpec
           example = fetch_current_example.call(self)
           retry_count = ex.metadata[:retry] || RSpec.configuration.default_retry_count
           sleep_interval = ex.metadata[:retry_wait] || RSpec.configuration.default_sleep_interval
+          exceptions_to_retry = ex.metadata[:exceptions_to_retry] || RSpec.configuration.exceptions_to_retry
 
           clear_lets = ex.metadata[:clear_lets_on_failure]
           clear_lets = RSpec.configuration.clear_lets_on_failure if clear_lets.nil?
@@ -36,6 +43,10 @@ module RSpec
             ex.run
 
             break if example.exception.nil?
+
+            if exceptions_to_retry.any?
+              break unless exceptions_to_retry.include?(example.exception.class)
+            end
 
             self.clear_lets if clear_lets
             sleep sleep_interval if sleep_interval.to_i > 0
