@@ -86,8 +86,9 @@ module RSpec
       example = current_example
 
       loop do
-        if verbose_retry?
-          if attempts > 0
+        if attempts > 0
+          RSpec.configuration.formatters.each { |f| f.retry(example) if f.respond_to? :retry }
+          if verbose_retry?
             message = "RSpec::Retry: #{ordinalize(attempts + 1)} try #{example.location}"
             message = "\n" + message if attempts == 1
             RSpec.configuration.reporter.message(message)
