@@ -10,6 +10,7 @@ module RSpec
         config.add_setting :default_retry_count, :default => 1
         config.add_setting :default_sleep_interval, :default => 0
         config.add_setting :clear_lets_on_failure, :default => true
+        config.add_setting :display_try_failure_messages, :default => false
         # If a list of exceptions is provided and 'retry' > 1, we only retry if
         # the exception that was raised by the example is in that list. Otherwise
         # we ignore the 'retry' value and fail immediately.
@@ -46,6 +47,13 @@ module RSpec
 
             if exceptions_to_retry.any?
               break unless exceptions_to_retry.include?(example.exception.class)
+            end
+
+            if RSpec.configuration.verbose_retry? && RSpec.configuration.display_try_failure_messages?
+              if i != (retry_count-1)
+                try_message = "#{RSpec::Retry.ordinalize(i + 1)} Try error in #{example.location}:\n #{example.exception.to_s} \n"
+                RSpec.configuration.reporter.message(try_message)
+              end
             end
 
             self.clear_lets if clear_lets
