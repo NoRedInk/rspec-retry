@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = RSpec::Retry::VERSION
   gem.add_runtime_dependency %{rspec-core}
+  gem.add_development_dependency %q{appraisal}
   gem.add_development_dependency %q{rspec}
   gem.add_development_dependency %q{guard-rspec}
   if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2')
