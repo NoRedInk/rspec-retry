@@ -52,6 +52,9 @@ end
 - __:clear_lets_on_failure__(default: *true*) Clear memoized values for ``let``s before retrying
 - __:exceptions_to_retry__(default: *[]*) List of exceptions that will trigger a retry (when empty, all exceptions will)
 
+## Environment Variables
+- __RSPEC_RETRY_RETRY_COUNT__ can override the retry counts even if a retry count is set in an example or default_retry_count is set in a configuration.
+
 ## Contributing
 
 1. Fork it
