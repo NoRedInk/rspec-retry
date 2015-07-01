@@ -55,6 +55,9 @@ end
 - __:exceptions_to_fail_hard__(default: *[]*) List of exceptions that will ignore rspec-retry and failed only once.  
 This option is useful if you know, that if some specific exception happened - there is no need to retry. [See more](https://github.com/NoRedInk/rspec-retry/pull/26#issuecomment-120265274)
 
+## Environment Variables
+- __RSPEC_RETRY_RETRY_COUNT__ can override the retry counts even if a retry count is set in an example or default_retry_count is set in a configuration.
+
 ## Contributing
 
 1. Fork it
