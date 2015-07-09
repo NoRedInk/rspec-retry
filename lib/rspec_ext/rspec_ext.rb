@@ -12,8 +12,8 @@ module RSpec
   module Core
     class ExampleGroup
       def clear_memoized
-        if respond_to? :__memoized, true
-          __memoized.instance_variable_get(:@memoized).clear
+        if respond_to? :__init_memoized, true
+          __init_memoized
         else
           @__memoized = nil
         end
