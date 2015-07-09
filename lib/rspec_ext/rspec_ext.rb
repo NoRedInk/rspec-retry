@@ -12,10 +12,11 @@ module RSpec
   module Core
     class ExampleGroup
       def clear_memoized
-        # __memoized is private method and is defined in rspec 3.3
-        __memoized.instance_variable_get(:@memoized).clear
-      rescue NameError
-        @__memoized = nil
+        if respond_to? :__memoized, true
+          __memoized.instance_variable_get(:@memoized).clear
+        else
+          @__memoized = nil
+        end
       end
 
       def clear_lets
