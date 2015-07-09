@@ -19,6 +19,10 @@ describe RSpec::Retry do
     @expectations.shift
   end
 
+  before(:all) do
+    ENV.delete('RSPEC_RETRY_RETRY_COUNT')
+  end
+
   context 'no retry option' do
     it 'should work' do
       expect(true).to be(true)
@@ -43,6 +47,22 @@ describe RSpec::Retry do
       it 'should stop retrying if  example is succeeded', :retry => 3 do
         expect(true).to be(shift_expectation)
         expect(count).to eq(2)
+      end
+    end
+
+    context 'with the environment variable RSPEC_RETRY_RETRY_COUNT' do
+      before(:all) do
+        set_expectations([false, false, true])
+        ENV['RSPEC_RETRY_RETRY_COUNT'] = '3'
+      end
+
+      after(:all) do
+        ENV.delete('RSPEC_RETRY_RETRY_COUNT')
+      end
+
+      it 'should override the retry count set in an example', :retry => 2 do
+        expect(true).to be(shift_expectation)
+        expect(count).to eq(3)
       end
     end
 
