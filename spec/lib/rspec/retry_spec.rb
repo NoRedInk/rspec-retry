@@ -46,6 +46,17 @@ describe RSpec::Retry do
       end
     end
 
+    context 'with :retry => 0' do
+      after(:all) { @@this_ran_once = nil }
+      it 'should still run once', retry: 0 do
+        @@this_ran_once = true
+      end
+
+      it 'should run have run once' do
+        expect(@@this_ran_once).to be true
+      end
+    end
+
     describe "with a list of exceptions", :retry => 2, :exceptions_to_retry => [NoMethodError] do
       context "the example throws an exception contained in the retry list" do
         it "retries the maximum number of times" do
