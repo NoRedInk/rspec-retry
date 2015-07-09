@@ -25,7 +25,10 @@ module RSpec
 
         config.around(:each) do |ex|
           example = fetch_current_example.call(self)
-          retry_count = ex.metadata[:retry] || RSpec.configuration.default_retry_count
+          retry_count = [
+            (ex.metadata[:retry] || RSpec.configuration.default_retry_count),
+            1
+          ].max
           sleep_interval = ex.metadata[:retry_wait] || RSpec.configuration.default_sleep_interval
           exceptions_to_retry = ex.metadata[:exceptions_to_retry] || RSpec.configuration.exceptions_to_retry
           exceptions_to_fail_hard = ex.metadata[:exceptions_to_fail_hard] || RSpec.configuration.exceptions_to_fail_hard
