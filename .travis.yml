@@ -5,6 +5,5 @@ rvm:
 gemfile:
   - gemfiles/rspec_3.2.gemfile
   - gemfiles/rspec_3.3.gemfile
-before_install: gem update --remote bundler
-script:
-  - bundle exec rake spec
+cache: bundler
+sudo: false
