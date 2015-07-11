@@ -1,4 +1,5 @@
-# RSpec::Retry
+# RSpec::Retry ![Build Status](https://secure.travis-ci.org/NoRedInk/rspec-retry.svg?branch=master)
+
 
 RSpec::Retry adds a ``:retry`` option for intermittently failing rspec examples.
 If an example has the ``:retry`` option, rspec will retry the example the
