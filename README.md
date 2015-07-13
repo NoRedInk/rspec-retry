@@ -51,7 +51,8 @@ end
 - __:default_sleep_interval__(default: *0*) Seconds to wait between retries
 - __:clear_lets_on_failure__(default: *true*) Clear memoized values for ``let``s before retrying
 - __:exceptions_to_retry__(default: *[]*) List of exceptions that will trigger a retry (when empty, all exceptions will)
-- __:exceptions_to_fail_hard__(default: *[]*) List of exceptions that will ignore rspec-retry and failed only once
+- __:exceptions_to_fail_hard__(default: *[]*) List of exceptions that will ignore rspec-retry and failed only once.  
+This option is useful if you know, that if some specific exception happened - there is no need to retry. [See more](https://github.com/NoRedInk/rspec-retry/pull/26#issuecomment-120265274)
 
 ## Contributing
 
