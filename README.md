@@ -51,7 +51,7 @@ end
 - __:default_sleep_interval__(default: *0*) Seconds to wait between retries
 - __:clear_lets_on_failure__(default: *true*) Clear memoized values for ``let``s before retrying
 - __:exceptions_to_retry__(default: *[]*) List of exceptions that will trigger a retry (when empty, all exceptions will)
-- __:exceptions_to_ignore_retry__(default: *[]*) List of exceptions that will ignore rspec-retry and failed only once
+- __:exceptions_to_fail_hard__(default: *[]*) List of exceptions that will ignore rspec-retry and failed only once
 
 ## Contributing
 
