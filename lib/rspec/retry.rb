@@ -50,9 +50,7 @@ module RSpec
               break unless exceptions_to_retry.include?(example.exception.class)
             end
 
-            if exceptions_to_fail_hard.any?
-              break if exceptions_to_fail_hard.include?(example.exception.class)
-            end
+            break if exceptions_to_fail_hard.include?(example.exception.class)
 
             self.clear_lets if clear_lets
             sleep sleep_interval if sleep_interval.to_i > 0
