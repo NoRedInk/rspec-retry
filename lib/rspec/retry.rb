@@ -54,7 +54,9 @@ module RSpec
             break if example.exception.nil?
 
             if exceptions_to_retry.any?
-              break unless exceptions_to_retry.include?(example.exception.class)
+              break unless exceptions_to_retry.any? do |exception_klass|
+                example.exception.is_a?(exception_klass)
+              end
             end
 
             self.clear_lets if clear_lets

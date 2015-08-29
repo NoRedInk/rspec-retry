@@ -77,8 +77,15 @@ describe RSpec::Retry do
       end
     end
 
-    describe "with a list of exceptions", :retry => 2, :exceptions_to_retry => [NoMethodError] do
+    describe "with a list of exceptions", :retry => 2, :exceptions_to_retry => [NameError] do
       context "the example throws an exception contained in the retry list" do
+        it "retries the maximum number of times" do
+          raise NameError unless count > 1
+          expect(count).to eq(2)
+        end
+      end
+
+      context "the example throws a child of an exception contained in the retry list" do
         it "retries the maximum number of times" do
           raise NoMethodError unless count > 1
           expect(count).to eq(2)
