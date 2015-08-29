@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["mike@noredink.com"]
   gem.description   = %q{retry intermittently failing rspec examples}
   gem.summary       = %q{retry intermittently failing rspec examples}
-  gem.homepage      = "http://github.com/y310/rspec-retry"
+  gem.homepage      = "http://github.com/NoRedInk/rspec-retry"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
