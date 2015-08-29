@@ -2,8 +2,8 @@
 require File.expand_path('../lib/rspec/retry/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Yusuke Mito"]
-  gem.email         = ["y310.1984@gmail.com"]
+  gem.authors       = ["Yusuke Mito", 'Michael Glass']
+  gem.email         = ["mike@noredink.com"]
   gem.description   = %q{retry intermittently failing rspec examples}
   gem.summary       = %q{retry intermittently failing rspec examples}
   gem.homepage      = "http://github.com/y310/rspec-retry"
