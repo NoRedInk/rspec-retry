@@ -26,7 +26,10 @@ require in ``spec_helper.rb``
 require 'rspec/retry'
 
 RSpec.configure do |config|
-  config.verbose_retry = true # show retry status in spec process
+  # show retry status in spec process
+  config.verbose_retry = true
+  # show exception that triggers a retry if verbose_retry is set to true
+  config.display_try_failure_messages = true
 end
 ```
 
@@ -48,6 +51,7 @@ end
 ## Configuration
 
 - __:verbose_retry__(default: *false*) Print retry status
+- __:display_try_failure_messages__ (default: *false*) If verbose retry is enabled, print what reason forced the retry
 - __:default_retry_count__(default: *1*) If retry count is not set in an example, this value is used by default
 - __:default_sleep_interval__(default: *0*) Seconds to wait between retries
 - __:clear_lets_on_failure__(default: *true*) Clear memoized values for ``let``s before retrying
