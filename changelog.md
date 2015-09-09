@@ -1,3 +1,7 @@
+# 0.4.4 - 2015-9-9
+## bugfixes
+fix gem permissions to be readable (thanks @jdelStrother / #42)
+
 # 0.4.3 - 2015-8-29
 ## bugfixes
 will retry on children of exceptions in the `exceptions_to_retry` list
