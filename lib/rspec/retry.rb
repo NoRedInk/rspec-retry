@@ -74,13 +74,21 @@ module RSpec
           RSpec.configuration.exceptions_to_retry
     end
 
+    def verbose_retry?
+      RSpec.configuration.verbose_retry?
+    end
+
+    def display_try_failure_messages?
+      RSpec.configuration.display_try_failure_messages?
+    end
+
     def run
       example = current_example
 
       loop do
-        if RSpec.configuration.verbose_retry?
+        if verbose_retry?
           if attempts > 0
-            message = "RSpec::Retry: #{RSpec::Retry.ordinalize(attempts + 1)} try #{example.location}"
+            message = "RSpec::Retry: #{ordinalize(attempts + 1)} try #{example.location}"
             message = "\n" + message if attempts == 1
             RSpec.configuration.reporter.message(message)
           end
@@ -101,9 +109,9 @@ module RSpec
           end
         end
 
-        if RSpec.configuration.verbose_retry? && RSpec.configuration.display_try_failure_messages?
+        if verbose_retry? && display_try_failure_messages?
           if i != (retry_count-1)
-            try_message = "#{RSpec::Retry.ordinalize(i + 1)} Try error in #{example.location}:\n #{example.exception.to_s} \n"
+            try_message = "#{ordinalize(i + 1)} Try error in #{example.location}:\n #{example.exception.to_s} \n"
             RSpec.configuration.reporter.message(try_message)
           end
         end
@@ -114,8 +122,10 @@ module RSpec
       end
     end
 
+    private
+
     # borrowed from ActiveSupport::Inflector
-    def self.ordinalize(number)
+    def ordinalize(number)
       if (11..13).include?(number.to_i % 100)
         "#{number}th"
       else
