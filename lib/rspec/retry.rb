@@ -17,6 +17,7 @@ module RSpec
         #
         # If no list of exceptions is provided and 'retry' > 1, we always retry.
         config.add_setting :exceptions_to_retry, :default => []
+        config.add_setting :exceptions_to_fail_hard, :default => []
 
         # context.example is deprecated, but RSpec.current_example is not
         # available until RSpec 3.0.
@@ -37,6 +38,7 @@ module RSpec
 
           sleep_interval = ex.metadata[:retry_wait] || RSpec.configuration.default_sleep_interval
           exceptions_to_retry = ex.metadata[:exceptions_to_retry] || RSpec.configuration.exceptions_to_retry
+          exceptions_to_fail_hard = ex.metadata[:exceptions_to_fail_hard] || RSpec.configuration.exceptions_to_fail_hard
 
           clear_lets = ex.metadata[:clear_lets_on_failure]
           clear_lets = RSpec.configuration.clear_lets_on_failure if clear_lets.nil?
@@ -66,6 +68,8 @@ module RSpec
                 RSpec.configuration.reporter.message(try_message)
               end
             end
+
+            break if exceptions_to_fail_hard.include?(example.exception.class)
 
             self.clear_lets if clear_lets
             sleep sleep_interval if sleep_interval.to_i > 0
