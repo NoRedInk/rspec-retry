@@ -12,6 +12,9 @@ module RSpec
         config.add_setting :clear_lets_on_failure, :default => true
         config.add_setting :display_try_failure_messages, :default => false
 
+        # retry based on example metadata
+        config.add_setting :retry_count_condition, :default => ->(_) { nil }
+
         # If a list of exceptions is provided and 'retry' > 1, we only retry if
         # the exception that was raised by the example is NOT in that list. Otherwise
         # we ignore the 'retry' value and fail immediately.
@@ -52,6 +55,7 @@ module RSpec
           (
           ENV['RSPEC_RETRY_RETRY_COUNT'] ||
               ex.metadata[:retry] ||
+              RSpec.configuration.retry_count_condition.call(ex) ||
               RSpec.configuration.default_retry_count
           ).to_i,
           1

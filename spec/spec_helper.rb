@@ -22,4 +22,6 @@ RSpec.configure do |config|
   config.around :each, :overridden do |ex|
     ex.run_with_retry retry: 3
   end
+
+  config.retry_count_condition = ->(example) { example.metadata[:retry_me_once] ? 2 : nil }
 end

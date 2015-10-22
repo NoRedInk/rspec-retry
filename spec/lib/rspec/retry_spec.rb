@@ -57,6 +57,15 @@ describe RSpec::Retry do
       end
     end
 
+    context 'with lambda condition' do
+      before(:all) { set_expectations([false, true]) }
+
+      it "should get retry count from condition call", retry_me_once: true do
+        expect(true).to be(shift_expectation)
+        expect(count).to eq(2)
+      end
+    end
+
     context 'with :retry => 0' do
       after(:all) { @@this_ran_once = nil }
       it 'should still run once', retry: 0 do
