@@ -120,4 +120,20 @@ describe RSpec::Retry do
       expect(let_based_on_control).to be(!@control)
     end
   end
+
+  describe 'running example.run_with_retry in an around filter', retry: 2 do
+    before(:each) { count_up }
+    before(:all) do
+      set_expectations([false, false, true])
+    end
+
+    it 'allows retry options to be overridden', :overridden do
+      expect(RSpec.current_example.metadata[:retry]).to eq(3)
+    end
+
+    it 'uses the overridden options', :overridden do
+      expect(true).to be(shift_expectation)
+      expect(count).to eq(3)
+    end
+  end
 end

@@ -1,8 +1,16 @@
 module RSpec
   module Core
     class Example
+      attr_accessor :attempts
+
       def clear_exception
         @exception = nil
+      end
+
+      class Procsy
+        def run_with_retry(opts = {})
+          RSpec::Retry.new(self, opts).run
+        end
       end
     end
   end
