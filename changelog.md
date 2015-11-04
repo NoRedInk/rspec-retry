@@ -1,3 +1,8 @@
+# 0.4.5 - 2015-11-4
+## enhancements
+retry can be called programmatically (thanks, @dwbutler / #45)
+
+
 # 0.4.4 - 2015-9-9
 ## bugfixes
 fix gem permissions to be readable (thanks @jdelStrother / #42)
