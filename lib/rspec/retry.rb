@@ -84,7 +84,8 @@ module RSpec
     end
 
     def retry_callback
-      ex.metadata[:retry_callback]
+      ex.metadata[:retry_callback] ||
+        RSpec.configuration.retry_callback
     end
 
     def run
