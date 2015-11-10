@@ -83,6 +83,10 @@ module RSpec
       RSpec.configuration.display_try_failure_messages?
     end
 
+    def retry_callback
+      ex.metadata[:retry_callback]
+    end
+
     def run
       example = current_example
 
