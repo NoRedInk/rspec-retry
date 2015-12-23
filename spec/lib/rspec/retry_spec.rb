@@ -89,12 +89,6 @@ describe RSpec::Retry do
           example_group.examples.first.metadata[:retry_attempts]
         end
 
-        it 'should initialize attempts metadata to 0' do
-          example_group.example { }
-          example_group.run
-          expect(retry_attempts).to eq(0)
-        end
-
         it 'should retry and match attempts metadata' do
           example_group.example do
             $count ||= 0
