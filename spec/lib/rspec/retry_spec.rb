@@ -78,6 +78,35 @@ describe RSpec::Retry do
     end
 
     describe "with a list of exceptions", :retry => 2, :exceptions_to_retry => [NameError] do
+      context do
+        let(:example_group) do
+          RSpec.describe('example group', exceptions_to_retry: [NameError], retry: 3).tap do |this|
+            this.run # initialize rspec-retry inside test example group
+          end
+        end
+
+        let(:retry_attempts) do
+          example_group.examples.first.metadata[:retry_attempts]
+        end
+
+        it 'should initialize attempts metadata to 0' do
+          example_group.example { }
+          example_group.run
+          expect(retry_attempts).to eq(0)
+        end
+
+        it 'should retry and match attempts metadata' do
+          example_group.example do
+            $count ||= 0
+            $count += 1
+            raise NameError unless $count > 2
+          end
+
+          example_group.run
+          expect(retry_attempts).to eq(2)
+        end
+      end
+
       context "the example throws an exception contained in the retry list" do
         it "retries the maximum number of times" do
           raise NameError unless count > 1
