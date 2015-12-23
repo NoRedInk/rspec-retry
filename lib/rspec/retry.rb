@@ -50,7 +50,7 @@ module RSpec
     # context.example is deprecated, but RSpec.current_example is not
     # available until RSpec 3.0.
     def current_example
-      RSpec.respond_to?(:current_example) ?
+      @current_example ||= RSpec.respond_to?(:current_example) ?
         RSpec.current_example : @ex.example
     end
 
@@ -120,6 +120,8 @@ module RSpec
           end
         end
 
+        example.metadata[:retry_attempts] = self.attempts
+        # require 'pry'; binding.pry
         example.clear_exception
         ex.run
 
