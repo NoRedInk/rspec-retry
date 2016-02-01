@@ -95,7 +95,7 @@ module RSpec
         end
 
         example.metadata[:retry_attempts] = self.attempts
-        # require 'pry'; binding.pry
+
         example.clear_exception
         ex.run
 
