@@ -16,6 +16,8 @@ class RSpec::Retry::Formatter < RSpec::Core::Formatters::BaseTextFormatter
 
   def dump_failures(_); end
 
+  def dump_pending(_); end
+
   def dump_summary(notification)
     output = "\nRSpec Retry Summary:\n"
     @tries.each do |key, retry_data|
