@@ -38,6 +38,14 @@ RSpec.configure do |config|
 end
 ```
 
+RSpec::Retry will load automatically for feature tests once included. Frameworks like Rails will
+automatically include gems for a certain environment. If you want to prevent RSpec::Retry from
+loading automatically, use:
+
+    gem 'rspec-retry', require: nil
+    
+Now RSpec::Retry will only load once explicitly required.
+
 ## Usage
 
 ```ruby
