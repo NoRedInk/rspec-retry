@@ -110,7 +110,7 @@ module RSpec
         end
 
         if verbose_retry? && display_try_failure_messages?
-          if attempts != (retry_count)
+          if attempts != retry_count
             try_message = "#{ordinalize(attempts)} Try error in #{example.location}:\n #{example.exception.to_s} \n"
             RSpec.configuration.reporter.message(try_message)
           end
