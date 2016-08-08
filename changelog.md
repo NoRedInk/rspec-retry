@@ -1,3 +1,6 @@
+# 0.5.0 - 2016-8-8
+drop support for rspec 3.2, added support for 3.4, 3.5
+
 # 0.4.6 - 2016-8-8
 failure message was off by 1 (thanks @anthonywoo, @vgrigoruk / #57)
 add the `exceptions_to_hard_fail` options (thanks @james-dominy, @ShockwaveNN / #59)

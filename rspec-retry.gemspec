@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "rspec-retry"
   gem.require_paths = ["lib"]
   gem.version       = RSpec::Retry::VERSION
-  gem.add_runtime_dependency %{rspec-core}
+  gem.add_runtime_dependency(%{rspec-core}, '~>3.3')
   gem.add_development_dependency %q{appraisal}
   gem.add_development_dependency %q{rspec}
   gem.add_development_dependency %q{guard-rspec}
