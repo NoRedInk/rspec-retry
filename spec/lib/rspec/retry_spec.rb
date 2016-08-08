@@ -19,6 +19,13 @@ describe RSpec::Retry do
     @expectations.shift
   end
 
+  class RetryError < StandardError; end
+  class RetryChildError < RetryError; end
+  class HardFailError < StandardError; end
+  class HardFailChildError < HardFailError; end
+  class OtherError < StandardError; end;
+  class SharedError < StandardError; end;
+
   before(:all) do
     ENV.delete('RSPEC_RETRY_RETRY_COUNT')
   end
@@ -77,17 +84,42 @@ describe RSpec::Retry do
       end
     end
 
-    describe "with a list of exceptions", :retry => 2, :exceptions_to_retry => [NameError] do
+    describe "with a list of exceptions to immediately fail on", :retry => 2, :exceptions_to_hard_fail => [HardFailError] do
+      context "the example throws an exception contained in the hard fail list" do
+        it "does not retry" do
+          expect(count).to be < 2
+          pending "This should fail with a count of 1: Count was #{count}"
+          raise HardFailError unless count > 1
+        end
+      end
+
+      context "the example throws a child of an exception contained in the hard fail list" do
+        it "does not retry" do
+          expect(count).to be < 2
+          pending "This should fail with a count of 1: Count was #{count}"
+          raise HardFailChildError unless count > 1
+        end
+      end
+
+      context "the throws an exception not contained in the hard fail list" do
+        it "retries the maximum number of times" do
+          raise OtherError unless count > 1
+          expect(count).to eq(2)
+        end
+      end
+    end
+
+    describe "with a list of exceptions to retry on", :retry => 2, :exceptions_to_retry => [RetryError] do
       context "the example throws an exception contained in the retry list" do
         it "retries the maximum number of times" do
-          raise NameError unless count > 1
+          raise RetryError unless count > 1
           expect(count).to eq(2)
         end
       end
 
       context "the example throws a child of an exception contained in the retry list" do
         it "retries the maximum number of times" do
-          raise NoMethodError unless count > 1
+          raise RetryChildError unless count > 1
           expect(count).to eq(2)
         end
       end
@@ -96,6 +128,39 @@ describe RSpec::Retry do
         it "only runs once" do
           set_expectations([false])
           expect(count).to eq(1)
+        end
+      end
+    end
+
+    describe "with both hard fail and retry list of exceptions", :retry => 2, :exceptions_to_retry => [SharedError, RetryError], :exceptions_to_hard_fail => [SharedError, HardFailError] do
+      context "the exception thrown exists in both lists" do
+        it "does not retry because the hard fail list takes precedence" do
+          expect(count).to be < 2
+          pending "This should fail with a count of 1: Count was #{count}"
+          raise SharedError unless count > 1
+        end
+      end
+
+      context "the example throws an exception contained in the hard fail list" do
+        it "does not retry because the hard fail list takes precedence" do
+          expect(count).to be < 2
+          pending "This should fail with a count of 1: Count was #{count}"
+          raise HardFailError unless count > 1
+        end
+      end
+
+      context "the example throws an exception contained in the retry list" do
+        it "retries the maximum number of times because the hard fail list doesn't affect this exception" do
+          raise RetryError unless count > 1
+          expect(count).to eq(2)
+        end
+      end
+
+      context "the example throws an exception contained in neither list" do
+        it "does not retry because the the exception is not in the retry list" do
+          expect(count).to be < 2
+          pending "This should fail with a count of 1: Count was #{count}"
+          raise OtherError unless count > 1
         end
       end
     end

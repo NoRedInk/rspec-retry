@@ -11,6 +11,14 @@ module RSpec
         config.add_setting :default_sleep_interval, :default => 0
         config.add_setting :clear_lets_on_failure, :default => true
         config.add_setting :display_try_failure_messages, :default => false
+
+        # If a list of exceptions is provided and 'retry' > 1, we only retry if
+        # the exception that was raised by the example is NOT in that list. Otherwise
+        # we ignore the 'retry' value and fail immediately.
+        #
+        # If no list of exceptions is provided and 'retry' > 1, we always retry.
+        config.add_setting :exceptions_to_hard_fail, :default => []
+
         # If a list of exceptions is provided and 'retry' > 1, we only retry if
         # the exception that was raised by the example is in that list. Otherwise
         # we ignore the 'retry' value and fail immediately.
@@ -69,6 +77,11 @@ module RSpec
           RSpec.configuration.default_sleep_interval
     end
 
+    def exceptions_to_hard_fail
+      ex.metadata[:exceptions_to_hard_fail] ||
+          RSpec.configuration.exceptions_to_hard_fail
+    end
+
     def exceptions_to_retry
       ex.metadata[:exceptions_to_retry] ||
           RSpec.configuration.exceptions_to_retry
@@ -103,6 +116,12 @@ module RSpec
         break if example.exception.nil?
 
         break if attempts >= retry_count
+
+        if exceptions_to_hard_fail.any?
+          break if exceptions_to_hard_fail.any? do |exception_klass|
+            example.exception.is_a?(exception_klass)
+          end
+        end
 
         if exceptions_to_retry.any?
           break unless exceptions_to_retry.any? do |exception_klass|

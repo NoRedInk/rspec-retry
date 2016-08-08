@@ -64,6 +64,7 @@ You can call `ex.run_with_retry(opts)` on an individual example.
 - __:default_retry_count__(default: *1*) If retry count is not set in an example, this value is used by default
 - __:default_sleep_interval__(default: *0*) Seconds to wait between retries
 - __:clear_lets_on_failure__(default: *true*) Clear memoized values for ``let``s before retrying
+- __:exceptions_to_hard_fail__(default: *[]*) List of exceptions that will trigger an immediate test failure without retry. Takes precedence over __:exceptions_to_retry__
 - __:exceptions_to_retry__(default: *[]*) List of exceptions that will trigger a retry (when empty, all exceptions will)
 
 ## Environment Variables
