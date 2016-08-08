@@ -1,7 +1,11 @@
+# 0.4.6 - 2016-8-8
+failure message was off by 1 (thanks @anthonywoo, @vgrigoruk / #57)
+add the `exceptions_to_hard_fail` options (thanks @james-dominy, @ShockwaveNN / #59)
+add retry reporter & api for accessing retry from reporter (thanks @tdeo / #54)
+
 # 0.4.5 - 2015-11-4
 ## enhancements
 retry can be called programmatically (thanks, @dwbutler / #45)
-
 
 # 0.4.4 - 2015-9-9
 ## bugfixes
