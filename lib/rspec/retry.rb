@@ -131,14 +131,14 @@ module RSpec
 
         if verbose_retry? && display_try_failure_messages?
           if attempts != retry_count
-            exceptions =
+            exception_strings =
               if ::RSpec::Core::MultipleExceptionError::InterfaceTag === example.exception
                 example.exception.all_exceptions.map(&:to_s)
               else
                 [example.exception.to_s]
               end
 
-            try_message = "#{ordinalize(attempts)} Try error in #{example.location}:\n #{exceptions.join "\n"} \n"
+            try_message = "#{ordinalize(attempts)} Try error in #{example.location}:\n #{exception_strings.join "\n"} \n"
             RSpec.configuration.reporter.message(try_message)
           end
         end
