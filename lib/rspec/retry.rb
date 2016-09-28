@@ -138,7 +138,7 @@ module RSpec
                 [example.exception.to_s]
               end
 
-            try_message = "#{ordinalize(attempts)} Try error in #{example.location}:\n #{exception_strings.join "\n"} \n"
+            try_message = "\n#{ordinalize(attempts)} Try error in #{example.location}:\n#{exception_strings.join "\n"}\n"
             RSpec.configuration.reporter.message(try_message)
           end
         end
