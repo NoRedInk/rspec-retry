@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    rspec-retry (0.5.0)
+    rspec-retry (0.5.1)
       rspec-core (~> 3.3)
 
 GEM

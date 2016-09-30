@@ -1,8 +1,14 @@
+# 0.5.1 - 2016-10-30
+## enhancements
+better failure message for multiple failures in one test (thanks @JonRowe / #62)
+
 # 0.5.0 - 2016-8-8
 drop support for rspec 3.2, added support for 3.4, 3.5
 
 # 0.4.6 - 2016-8-8
+## bugfixes
 failure message was off by 1 (thanks @anthonywoo, @vgrigoruk / #57)
+## enhancements
 add the `exceptions_to_hard_fail` options (thanks @james-dominy, @ShockwaveNN / #59)
 add retry reporter & api for accessing retry from reporter (thanks @tdeo / #54)
 
