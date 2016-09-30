@@ -201,4 +201,45 @@ describe RSpec::Retry do
       expect(count).to eq(3)
     end
   end
+
+  describe 'output in verbose mode' do
+
+    line_1 = __LINE__ + 8
+    line_2 = __LINE__ + 11
+    let(:group) do
+      RSpec.describe 'ExampleGroup', retry: 2 do
+        after do
+          fail 'broken after hook'
+        end
+
+        it 'passes' do
+          true
+        end
+
+        it 'fails' do
+          fail 'broken spec'
+        end
+      end
+    end
+
+    it 'outputs failures correctly' do
+      RSpec.configuration.output_stream = output = StringIO.new
+      RSpec.configuration.verbose_retry = true
+      RSpec.configuration.display_try_failure_messages = true
+      expect {
+        group.run RSpec.configuration.reporter
+      }.to change { output.string }.to a_string_including <<-STRING.gsub(/^\s+\| ?/, '')
+        | 1st Try error in ./spec/lib/rspec/retry_spec.rb:#{line_1}:
+        | broken after hook
+        |
+        | RSpec::Retry: 2nd try ./spec/lib/rspec/retry_spec.rb:#{line_1}
+        | F
+        | 1st Try error in ./spec/lib/rspec/retry_spec.rb:#{line_2}:
+        | broken spec
+        | broken after hook
+        |
+        | RSpec::Retry: 2nd try ./spec/lib/rspec/retry_spec.rb:#{line_2}
+      STRING
+    end
+  end
 end
