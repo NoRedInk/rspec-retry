@@ -1,9 +1,10 @@
 # RSpec::Retry ![Build Status](https://secure.travis-ci.org/NoRedInk/rspec-retry.svg?branch=master)
 
-
 RSpec::Retry adds a ``:retry`` option for intermittently failing rspec examples.
 If an example has the ``:retry`` option, rspec will retry the example the
 specified number of times until the example succeeds.
+
+0.5.* is compatible with rspec 3.3-3.5* for 3.2 support, use 0.4.6. For older rspec, ymmv.
 
 ## Installation
 
