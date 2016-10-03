@@ -17,7 +17,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency(%{rspec-core}, '>3.3', '<3.6')
   gem.add_development_dependency %q{appraisal}
   gem.add_development_dependency %q{rspec}
-  gem.add_development_dependency %q{guard-rspec}
   if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2')
     gem.add_development_dependency %q{pry-debugger}
   else
