@@ -1,4 +1,8 @@
-# 0.5.1 - 2016-10-30
+# 0.5.2 - 2016-10-3
+## bugfixes
+supports versions > 3.5.0  (thanks @y-yagi / #65)
+
+# 0.5.1 - 2016-9-30
 ## enhancements
 better failure message for multiple failures in one test (thanks @JonRowe / #62)
 
