@@ -19,15 +19,15 @@ class RSpec::Retry::Formatter < RSpec::Core::Formatters::BaseTextFormatter
   def dump_pending(_); end
 
   def dump_summary(notification)
-    output = "\nRSpec Retry Summary:\n"
+    summary = "\nRSpec Retry Summary:\n"
     @tries.each do |key, retry_data|
       next if retry_data[:successes] < 1 || retry_data[:tries] <= 1
-      output += "\t#{key.location}: #{key.full_description}: passed at attempt #{retry_data[:tries]}\n"
+      summary += "\t#{key.location}: #{key.full_description}: passed at attempt #{retry_data[:tries]}\n"
     end
     retried = @tries.count { |_, v| v[:tries] > 1  && v[:successes] > 0 }
-    output += "\n\t#{retried} of #{notification.example_count} tests passed with retries.\n"
-    output += "\t#{notification.failure_count} tests failed all retries.\n"
-    puts output
+    summary += "\n\t#{retried} of #{notification.example_count} tests passed with retries.\n"
+    summary += "\t#{notification.failure_count} tests failed all retries.\n"
+    output.puts summary
   end
 
   def example_passed(notification)
