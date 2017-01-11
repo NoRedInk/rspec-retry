@@ -1,4 +1,9 @@
-# 0.5.2 - 2016-10-3
+# 0.5.3 - 2017-01-11
+## enhancements
+printing summary of rspec to output not STDOUT (thanks @trevorcreech / #68)
+removing some development dependencies
+
+# 0.5.2 - 2016-10-03
 ## bugfixes
 supports versions > 3.5.0  (thanks @y-yagi / #65)
 
