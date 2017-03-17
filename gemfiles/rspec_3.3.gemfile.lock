@@ -1,8 +1,8 @@
 PATH
-  remote: ../
+  remote: ..
   specs:
     rspec-retry (0.5.3)
-      rspec-core (~> 3.3)
+      rspec-core (> 3.3, < 3.6)
 
 GEM
   remote: https://rubygems.org/
@@ -49,4 +49,4 @@ DEPENDENCIES
   rspec-retry!
 
 BUNDLED WITH
-   1.12.5
+   1.14.6
