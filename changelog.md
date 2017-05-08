@@ -1,3 +1,7 @@
+# 0.5.4 - 2017-05-05
+## enhancements
+added support for rspec 3.6.0
+
 # 0.5.3 - 2017-01-11
 ## enhancements
 printing summary of rspec to output not STDOUT (thanks @trevorcreech / #68)
