@@ -1,6 +1,6 @@
-# 0.5.4 - 2017-05-05
+# 0.5.4 - 2017-05-08
 ## enhancements
-added support for rspec 3.6.0
+added support for rspec 3.6.0 (thanks @dthorsen / #76)
 
 # 0.5.3 - 2017-01-11
 ## enhancements
