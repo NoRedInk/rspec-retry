@@ -25,6 +25,7 @@ module RSpec
         #
         # If no list of exceptions is provided and 'retry' > 1, we always retry.
         config.add_setting :exceptions_to_retry, :default => []
+        config.add_setting :retry_callback, :default => nil
 
         config.around(:each) do |ex|
           ex.run_with_retry
@@ -95,6 +96,11 @@ module RSpec
       RSpec.configuration.display_try_failure_messages?
     end
 
+    def retry_callback
+      ex.metadata[:retry_callback] ||
+        RSpec.configuration.retry_callback
+    end
+
     def run
       example = current_example
 
@@ -146,6 +152,8 @@ module RSpec
         example.example_group_instance.clear_lets if clear_lets
 
         sleep sleep_interval if sleep_interval.to_i > 0
+
+        retry_callback[example, attempts] if retry_callback
       end
     end
 
