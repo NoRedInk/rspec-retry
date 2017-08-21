@@ -202,6 +202,45 @@ describe RSpec::Retry do
     end
   end
 
+  describe 'calling retry_callback between retries', retry: 2 do
+    before(:all) do
+      RSpec.configuration.retry_callback = proc do |example|
+        @control = false
+        @example = example
+      end
+    end
+
+    after(:all) do
+      RSpec.configuration.retry_callback = nil
+    end
+
+    context 'should call retry_callback' do
+      before(:all) do
+        @control = true
+        @example = nil
+      end
+
+      it do |example|
+        expect(@control).to be(false)
+        expect(@example).to eq(example)
+      end
+    end
+
+    context 'does not call retry_callback if no errors' do
+      before(:all) do
+        @control = true
+        @example = nil
+      end
+
+      after do
+        expect(@control).to be(true)
+        expect(@example).to be_nil
+      end
+
+      it { true }
+    end
+  end
+
   describe 'output in verbose mode' do
 
     line_1 = __LINE__ + 8

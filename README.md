@@ -42,6 +42,14 @@ RSpec.configure do |config|
   config.around :each, :js do |ex|
     ex.run_with_retry retry: 3
   end
+
+  # callback to be run between retries  
+  config.retry_callback = proc do |ex|
+    # run some additional clean up task - can be filtered by example metadata
+    if ex.metadata[:js]
+      Capybara.reset!     
+    end
+  end
 end
 ```
 
@@ -73,6 +81,8 @@ You can call `ex.run_with_retry(opts)` on an individual example.
 - __:clear_lets_on_failure__(default: *true*) Clear memoized values for ``let``s before retrying
 - __:exceptions_to_hard_fail__(default: *[]*) List of exceptions that will trigger an immediate test failure without retry. Takes precedence over __:exceptions_to_retry__
 - __:exceptions_to_retry__(default: *[]*) List of exceptions that will trigger a retry (when empty, all exceptions will)
+- __:retry_callback__(default: *nil*) Callback function to be called between retries
+
 
 ## Environment Variables
 - __RSPEC_RETRY_RETRY_COUNT__ can override the retry counts even if a retry count is set in an example or default_retry_count is set in a configuration.
