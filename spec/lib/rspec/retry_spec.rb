@@ -205,7 +205,7 @@ describe RSpec::Retry do
   describe 'calling retry_callback between retries', retry: 2 do
     before(:all) do
       RSpec.configuration.retry_callback = proc do |example|
-        @control = false
+        @retry_callback_called = true
         @example = example
       end
     end
@@ -216,24 +216,24 @@ describe RSpec::Retry do
 
     context 'should call retry_callback' do
       before(:all) do
-        @control = true
+        @retry_callback_called = false
         @example = nil
       end
 
       it do |example|
-        expect(@control).to be(false)
+        expect(@retry_callback_called).to be(true)
         expect(@example).to eq(example)
       end
     end
 
     context 'does not call retry_callback if no errors' do
       before(:all) do
-        @control = true
+        @retry_callback_called = false
         @example = nil
       end
 
       after do
-        expect(@control).to be(true)
+        expect(@retry_callback_called).to be(false)
         expect(@example).to be_nil
       end
 
