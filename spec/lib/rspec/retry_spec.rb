@@ -214,15 +214,23 @@ describe RSpec::Retry do
       RSpec.configuration.retry_callback = nil
     end
 
-    context 'should call retry_callback' do
+    context 'should call retry_callback if failure' do
       before(:all) do
         @retry_callback_called = false
         @example = nil
+        @retry_attempts = 0
       end
 
       it do |example|
-        expect(@retry_callback_called).to be(true)
-        expect(@example).to eq(example)
+        if @retry_attempts == 0
+          @retry_attempts += 1
+          expect(@retry_callback_called).to be(false)
+          expect(@example).to eq(nil)
+          raise "let's retry once!"
+        elsif @retry_attempts > 0
+          expect(@retry_callback_called).to be(true)
+          expect(@example).to eq(example)
+        end
       end
     end
 
