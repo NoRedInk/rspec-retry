@@ -13,3 +13,7 @@ end
 appraise 'rspec-3.6' do
   gem 'rspec', '~> 3.6.0'
 end
+
+appraise 'rspec-3.7' do
+  gem 'rspec', '~> 3.7.0'
+end

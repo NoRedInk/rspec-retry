@@ -1,3 +1,7 @@
+# 0.5.6 - 2017-10-17
+## enhancements
+added support for rspec 3.7.0
+
 # 0.5.5 - 2017-08-22
 ## enhancements
 added retry_callback to help with cleanup between runs (thanks @abrom / #80)
