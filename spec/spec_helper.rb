@@ -2,10 +2,14 @@ require 'rspec'
 require 'rspec/core/sandbox'
 
 require 'rspec/retry'
-if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2')
-  require "pry-debugger"
-else
-  require "pry-byebug"
+
+begin
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2')
+    require "pry-debugger"
+  else
+    require "pry-byebug"
+  end
+rescue LoadError
 end
 
 RSpec.configure do |config|
