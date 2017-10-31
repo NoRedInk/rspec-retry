@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     rspec-retry (0.5.5)
-      rspec-core (> 3.3, < 3.7)
+      rspec-core (~> 3.3)
 
 GEM
   remote: https://rubygems.org/
