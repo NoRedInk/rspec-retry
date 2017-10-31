@@ -18,6 +18,4 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency(%{rspec-core}, '>3.3', '<3.7')
   gem.add_development_dependency %q{appraisal}
   gem.add_development_dependency %q{rspec}
-  gem.add_development_dependency %q{byebug}, '~>9.0.6' # 9.1 deprecates ruby 2.1
-  gem.add_development_dependency %q{pry-byebug}
 end
