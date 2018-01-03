@@ -121,15 +121,11 @@ module RSpec
         break if attempts >= retry_count
 
         if exceptions_to_hard_fail.any?
-          break if exceptions_to_hard_fail.any? do |exception_klass|
-            example.exception.is_a?(exception_klass)
-          end
+          break if exception_exists_in?(exceptions_to_hard_fail, example.exception)
         end
 
         if exceptions_to_retry.any?
-          break unless exceptions_to_retry.any? do |exception_klass|
-            example.exception.is_a?(exception_klass)
-          end
+          break unless exception_exists_in?(exceptions_to_retry, example.exception)
         end
 
         if verbose_retry? && display_try_failure_messages?
@@ -170,6 +166,12 @@ module RSpec
         when 3; "#{number}rd"
         else    "#{number}th"
         end
+      end
+    end
+
+    def exception_exists_in?(list, exception)
+      list.any? do |exception_klass|
+        exception.is_a?(exception_klass) || exception_klass === exception
       end
     end
   end
