@@ -23,9 +23,8 @@ describe RSpec::Retry do
   class RetryChildError < RetryError; end
   class HardFailError < StandardError; end
   class HardFailChildError < HardFailError; end
-  class OtherError < StandardError; end;
-  class SharedError < StandardError; end;
-
+  class OtherError < StandardError; end
+  class SharedError < StandardError; end
   before(:all) do
     ENV.delete('RSPEC_RETRY_RETRY_COUNT')
   end
@@ -128,6 +127,20 @@ describe RSpec::Retry do
         it "only runs once" do
           set_expectations([false])
           expect(count).to eq(1)
+        end
+      end
+
+      context 'the example retries exceptions which match with case equality' do
+        class CaseEqualityError < StandardError
+          def self.===(other)
+            # An example of dynamic matching
+            other.message == 'Rescue me!'
+          end
+        end
+
+        it 'retries the maximum number of times', exceptions_to_retry: [CaseEqualityError] do
+          raise StandardError, 'Rescue me!' unless count > 1
+          expect(count).to eq(2)
         end
       end
     end
