@@ -3,7 +3,8 @@ rvm:
   - 2.1
   - 2.2
   - 2.3.3
-  - 2.4.0
+  - 2.4.3
+  - 2.5.0
 gemfile:
   - gemfiles/rspec_3.3.gemfile
   - gemfiles/rspec_3.4.gemfile
