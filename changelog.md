@@ -1,6 +1,6 @@
 # 0.5.7 - 2018-03-13
 ## enhancements
-remove <3.8 constraint on rspec-core to prevent breaking when rspec-core upgrades
+remove <3.8 constraint on rspec-core to prevent breaking when rspec-core upgrades (thanks @dthorsen / #89)
 
 # 0.5.6 - 2017-10-17
 ## enhancements
