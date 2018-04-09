@@ -17,7 +17,9 @@ specified number of times until the example succeeds.
 
 Add this line to your application's Gemfile:
 
-    gem 'rspec-retry'
+```ruby
+gem 'rspec-retry', group: :test # Unlike rspec, this doesn't need to be included in development group
+```
 
 And then execute:
 
