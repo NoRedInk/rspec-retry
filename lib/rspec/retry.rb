@@ -9,6 +9,7 @@ module RSpec
         config.add_setting :verbose_retry, :default => false
         config.add_setting :default_retry_count, :default => 1
         config.add_setting :default_sleep_interval, :default => 0
+        config.add_setting :exponential_backoff, :default => false
         config.add_setting :clear_lets_on_failure, :default => true
         config.add_setting :display_try_failure_messages, :default => false
 
@@ -76,8 +77,12 @@ module RSpec
     end
 
     def sleep_interval
-      ex.metadata[:retry_wait] ||
-          RSpec.configuration.default_sleep_interval
+      if ex.metadata[:exponential_backoff]
+          2**(current_example.attempts-1) * ex.metadata[:retry_wait]
+      else
+          ex.metadata[:retry_wait] ||
+              RSpec.configuration.default_sleep_interval
+      end
     end
 
     def exceptions_to_hard_fail
@@ -149,7 +154,7 @@ module RSpec
           example.example_group_instance.instance_exec(example, &RSpec.configuration.retry_callback)
         end
 
-        sleep sleep_interval if sleep_interval.to_i > 0
+        sleep sleep_interval if sleep_interval.to_f > 0
       end
     end
 

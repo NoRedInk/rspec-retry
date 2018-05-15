@@ -83,6 +83,21 @@ describe RSpec::Retry do
       end
     end
 
+    context "with exponential backoff enabled", :retry => 3, :retry_wait => 0.001, :exponential_backoff => true do
+      context do
+        before(:all) do
+          set_expectations([false, false, true])
+          @start_time = Time.now
+        end
+
+        it 'should run example until :retry times', :retry => 3 do
+          expect(true).to be(shift_expectation)
+          expect(count).to eq(3)
+          expect(Time.now - @start_time).to be >= (0.001)
+        end
+      end
+    end
+
     describe "with a list of exceptions to immediately fail on", :retry => 2, :exceptions_to_hard_fail => [HardFailError] do
       context "the example throws an exception contained in the hard fail list" do
         it "does not retry" do
