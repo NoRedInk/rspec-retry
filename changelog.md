@@ -1,3 +1,8 @@
+# 0.6.0 - 2018-05-15
+## enhancements
+add exponential backoff option (thanks @patveith, @thedrow / #91, #94, #95)
+better documentation (thanks @swrobel / #90)
+
 # 0.5.7 - 2018-03-13
 ## enhancements
 remove <3.8 constraint on rspec-core to prevent breaking when rspec-core upgrades (thanks @dthorsen / #89)
