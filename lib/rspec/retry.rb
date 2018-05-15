@@ -154,7 +154,7 @@ module RSpec
           example.example_group_instance.instance_exec(example, &RSpec.configuration.retry_callback)
         end
 
-        sleep sleep_interval if sleep_interval.to_i > 0
+        sleep sleep_interval if sleep_interval.to_f > 0
       end
     end
 

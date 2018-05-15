@@ -83,13 +83,17 @@ describe RSpec::Retry do
       end
     end
 
-    context "with exponential backoff enabled", :retry => 3, :retry_wait => 5, :exponential_backoff => true do
+    context "with exponential backoff enabled", :retry => 3, :retry_wait => 0.001, :exponential_backoff => true do
       context do
-        before(:all) { set_expectations([false, false, true]) }
+        before(:all) do
+          set_expectations([false, false, true])
+          @start_time = Time.now
+        end
 
         it 'should run example until :retry times', :retry => 3 do
           expect(true).to be(shift_expectation)
           expect(count).to eq(3)
+          expect(Time.now - @start_time).to be >= (0.001)
         end
       end
     end
