@@ -1,3 +1,8 @@
+# 0.6.1 - 2018-06-11
+## enhancements
+add more flexible method of retrying (thanks @varyform / #48)
+store retry attempts in example metadata (thanks @aeberlin / #43)
+
 # 0.6.0 - 2018-05-15
 ## enhancements
 add exponential backoff option (thanks @patveith, @thedrow / #91, #94, #95)  
