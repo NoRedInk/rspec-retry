@@ -149,15 +149,7 @@ describe RSpec::Retry do
           $count, $example_code = 0, example_code
 
           RSpec.describe("example group", exceptions_to_retry: [NameError], retry: 3).tap do |this|
-            if rspec_version =~ /^3\.2/
-              this.instance_eval %{
-                it 'intentionally raises an error' do
-                  #{$example_code}
-                end
-              }
-            else
-              this.run # initialize for rspec 3.3+ with no examples
-            end
+            this.run # initialize for rspec 3.3+ with no examples
           end
         end
 
@@ -166,10 +158,7 @@ describe RSpec::Retry do
         end
 
         it 'should retry and match attempts metadata' do
-          unless rspec_version =~ /^3\.2/
-            example_group.example { instance_eval($example_code) }
-          end
-
+          example_group.example { instance_eval($example_code) }
           example_group.run
 
           expect(retry_attempts).to eq(2)
