@@ -47,11 +47,8 @@ module RSpec
       current_example.attempts ||= 0
     end
 
-    # context.example is deprecated, but RSpec.current_example is not
-    # available until RSpec 3.0.
     def current_example
-      RSpec.respond_to?(:current_example) ?
-        RSpec.current_example : @ex.example
+      @current_example ||= RSpec.current_example
     end
 
     def retry_count
@@ -119,6 +116,8 @@ module RSpec
             RSpec.configuration.reporter.message(message)
           end
         end
+
+        example.metadata[:retry_attempts] = self.attempts
 
         example.clear_exception
         ex.run
