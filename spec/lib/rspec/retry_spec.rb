@@ -319,6 +319,37 @@ describe RSpec::Retry do
     end
   end
 
+  describe 'Example::Procsy#attempts' do
+    let!(:example_group) do
+      RSpec.describe do
+        before :all do
+          @@results = {}
+        end
+
+        around do |example|
+          example.run_with_retry
+          @@results[example.description] = [example.exception.nil?, example.attempts]
+        end
+
+        specify 'without retry option' do
+          expect(true).to be(true)
+        end
+
+        specify 'with retry option', retry: 3 do
+          expect(true).to be(false)
+        end
+      end
+    end
+
+    it 'should be exposed' do
+      example_group.run
+      expect(example_group.class_variable_get(:@@results)).to eq({
+        'without retry option' => [true, 1],
+        'with retry option' => [false, 3]
+      })
+    end
+  end
+
   describe 'output in verbose mode' do
 
     line_1 = __LINE__ + 8

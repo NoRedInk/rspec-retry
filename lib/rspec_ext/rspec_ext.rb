@@ -11,6 +11,10 @@ module RSpec
         def run_with_retry(opts = {})
           RSpec::Retry.new(self, opts).run
         end
+
+        def attempts
+          @example.attempts
+        end
       end
     end
   end
