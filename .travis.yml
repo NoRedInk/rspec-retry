@@ -12,4 +12,3 @@ gemfile:
   - gemfiles/rspec_3.6.gemfile
   - gemfiles/rspec_3.7.gemfile
 cache: bundler
-sudo: false
