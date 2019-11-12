@@ -163,6 +163,19 @@ describe RSpec::Retry do
 
           expect(retry_attempts).to eq(2)
         end
+
+        let(:retry_exceptions) do
+          example_group.examples.first.metadata[:retry_exceptions]
+        end
+
+        it 'should add exceptions into retry_exceptions metadata array' do
+          example_group.example { instance_eval($example_code) }
+          example_group.run
+
+          expect(retry_exceptions.count).to eq(2)
+          expect(retry_exceptions[0].class).to eq NameError
+          expect(retry_exceptions[1].class).to eq NameError
+        end
       end
 
       context "the example throws an exception contained in the retry list" do

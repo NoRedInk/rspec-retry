@@ -118,6 +118,7 @@ module RSpec
         end
 
         example.metadata[:retry_attempts] = self.attempts
+        example.metadata[:retry_exceptions] ||= []
 
         example.clear_exception
         ex.run
@@ -125,6 +126,8 @@ module RSpec
         self.attempts += 1
 
         break if example.exception.nil?
+
+        example.metadata[:retry_exceptions] << example.exception
 
         break if attempts >= retry_count
 
