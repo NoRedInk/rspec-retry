@@ -8,8 +8,8 @@ specified number of times until the example succeeds.
 
 | Rspec Version | Rspec-Retry Version |
 |---------------|---------------------|
-| > 3.8         | 0.6.1 but untested  |
-| > 3.3, <= 3.8 | 0.6.1               |
+| > 3.8         | 0.6.2 but untested  |
+| > 3.3, <= 3.8 | 0.6.2               |
 | 3.2           | 0.4.6               |
 | 2.14.8        | 0.4.4               |
 

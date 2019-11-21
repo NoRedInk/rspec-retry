@@ -1,3 +1,13 @@
+# 0.6.2 - 2019-11-21
+## enhancements
+expose `example.attempts` (in addition to `example.metadata[:attempts]`) (thanks @knu / #103)
+expose `example.metadata[:retry_exceptions]` (thanks @drummond-work / #106)
+
+## bugfixes / cleanup
+ci works again! (#107)
+cleanup travis.yml (thanks @olleolleolle / #105)
+
+
 # 0.6.1 - 2018-06-11
 ## enhancements
 add more flexible method of retrying (thanks @varyform / #48)
