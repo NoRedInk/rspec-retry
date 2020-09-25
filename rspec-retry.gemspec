@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["mike@noredink.com"]
   gem.description   = %q{retry intermittently failing rspec examples}
   gem.summary       = %q{retry intermittently failing rspec examples}
-  gem.homepage      = "http://github.com/NoRedInk/rspec-retry"
+  gem.homepage      = "https://github.com/NoRedInk/rspec-retry"
   gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($\)
