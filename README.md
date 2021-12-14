@@ -13,6 +13,14 @@ specified number of times until the example succeeds.
 | 3.2           | 0.4.6               |
 | 2.14.8        | 0.4.4               |
 
+### Maintenance Expectations
+
+NoRedInk open-sourced in the help that it will help other people, but we only plan to do maintenance when we have an internal need for it.
+Since we're not currently investing in our Ruby stack, that means that it will probably fall behind the latest versions of Ruby and Rspec and not grow any new functionality.
+
+That said, if you're reading this and you need this gem to do something new, feel free to fork and publish your own thing!
+We'd be happy to accept PRs to keep versions up-to-date, as well.
+
 ## Installation
 
 Add this line to your application's Gemfile:
