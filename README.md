@@ -15,11 +15,12 @@ specified number of times until the example succeeds.
 
 ### Maintenance Expectations
 
-NoRedInk open-sourced in the help that it will help other people, but we only plan to do maintenance when we have an internal need for it.
-Since we're not currently investing in our Ruby stack, that means that it will probably fall behind the latest versions of Ruby and Rspec and not grow any new functionality.
+NoRedInk used to be a Ruby shop, and we open-sourced this in the hope that it will help other people.
+However, we've been moving away from Ruby for some time now, and only plan to do maintenance on this repo when we have an internal need for it.
+We don't plan to add any new functionality, and expect that it will fall behind the latest versions of Ruby and Rspec.
 
-That said, if you're reading this and you need this gem to do something new, feel free to fork and publish your own thing!
-We'd be happy to accept PRs to keep versions up-to-date, as well.
+That said, if you're reading this and you need this gem to do something new, feel free to fork it and publish your own gem!
+If you open an issue here to let us know about your fork, we can add a link to it from this repo to help folks find something that's more actively maintained.
 
 ## Installation
 
