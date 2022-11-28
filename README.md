@@ -27,7 +27,7 @@ If you open an issue here to let us know about your fork, we can add a link to i
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rspec-retry', group: :test # Unlike rspec, this doesn't need to be included in development group
+gem 'rspec-retry', require: false, group: :test # Unlike rspec, this doesn't need to be included in development group
 ```
 
 And then execute:
