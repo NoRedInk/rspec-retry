@@ -78,13 +78,12 @@ module RSpec
     end
 
     def sleep_interval
-      if ex.metadata[:exponential_backoff]
-          2**(current_example.attempts-1) * ex.metadata[:retry_wait]
+      if ex.metadata[:exponential_backoff] || RSpec.configuration.exponential_backoff
+        2**(current_example.attempts-1) * (ex.metadata[:retry_wait] || RSpec.configuration.default_sleep_interval)
       else
-          ex.metadata[:retry_wait] ||
-              RSpec.configuration.default_sleep_interval
+        ex.metadata[:retry_wait] || RSpec.configuration.default_sleep_interval
       end
-    end
+    end    
 
     def exceptions_to_hard_fail
       ex.metadata[:exceptions_to_hard_fail] ||
